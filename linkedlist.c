@@ -1,3 +1,7 @@
+/**
+This code generates a 2D linkedlist list based on a number of
+unprecendented inputs from the user.
+**/
 #include <stdio.h>
 #include <stdlib.h>
 #include <ctype.h>
@@ -35,21 +39,21 @@ int main(void){
         switch (choice)
         {
         case 1:
-            counter=counter+1;
-            add_list(&list_node,counter);
+            counter=counter+1;//give a predefined index to each list
+            add_list(&list_node,counter);//add a new list
             break;
         case 2:
-            flag=print_list(list_node);
+            flag=print_list(list_node);//check if the main list is empty,so nothing to add
             if(!flag){
                 break;
             }
             selected_list=select_list(list_ptr);
             if(selected_list<=counter && selected_list>=1){
-            row_node=search_list(list_node,selected_list);
+            row_node=search_list(list_node,selected_list);//search for list where to add node
             
             printf("\tGive the element to be added:");
             scanf("%i",&number);
-            add_node(&row_node->next2,number);
+            add_node(&row_node->next2,number);//adding node to user defined list
             }
             else{
                 outputformat();
@@ -65,12 +69,12 @@ int main(void){
             selected_list=select_list(list_ptr);
             if(selected_list<=counter && selected_list>=1){
             row_node=search_list(list_node,selected_list);
-            if(checkempty(row_node)){
+            if(checkempty(row_node)){//if list is empty do nothing
                 break;
             }
             printf("\tGive the number to be removed:");
             scanf("%i",&number);
-            del_node(&row_node->next2,number);}
+            del_node(&row_node->next2,number);}//delete node from particular list
             else{
                 outputformat();
                 printf("\tNot a valid list\n");
@@ -94,7 +98,7 @@ int main(void){
             if(!isalpha(sort)){
                 printf("\tPlease enter a alphabet\n");
                 break;}
-            sort_node(row_node->next2,sort);
+            sort_node(row_node->next2,sort);//sorting node
             outputformat();
             printf("\tSorted list\n");
             print_node(row_node->next2);
@@ -117,7 +121,7 @@ int main(void){
                 break;
             }
             outputformat();
-            print_node(row_node->next2);
+            print_node(row_node->next2);//printing node
             outputformat();
             }
             else{
@@ -143,8 +147,8 @@ int main(void){
                 if(checkempty(row_node) && checkempty(merger_node)){
                     break;
                 }
-                    first=merge_list(row_node->next2,merger_node->next2);
-                    del_list(&list_node,list2);
+                    first=merge_list(row_node->next2,merger_node->next2);//merging to 1st list
+                    del_list(&list_node,list2);//deleting merged list
                     outputformat();
                     printf("\tLists available after merger:\n");
                     print_list(list_node);
@@ -164,7 +168,7 @@ int main(void){
         case 7:
             exit(0);
             break;
-        default:
+        default://invalid argument
             outputformat();
             printf("\tInvalid number\n");
             outputformat();
@@ -172,7 +176,7 @@ int main(void){
         }
 
     }
-    
+    return 0;
     
 }
 bool checkempty(node2* list_ptr){
