@@ -9,7 +9,7 @@ unprecendented inputs from the user.
 
 
 int main(void){
-    int choice,number,counter=0,selected_list,list1,list2;
+    int choice,number,counter=0,selected_list,list1,list2,smaller=0,larger=0;
     int* list_ptr=malloc(sizeof(int));
     bool flag=false;
     char sort;
@@ -53,6 +53,13 @@ int main(void){
             
             printf("\tGive the element to be added:");
             scanf("%i",&number);
+            if(number<0)
+            {
+                outputformat();
+                printf("\tNegative numbers not allowed\n");
+                outputformat();
+                break;
+            }
             add_node(&row_node->next2,number);//adding node to user defined list
             }
             else{
@@ -135,20 +142,31 @@ int main(void){
             if(!flag){
                 break;
             }
-                printf("\tSelect any 2 list to merge(Merger will be made in 1st list)->\n");
-                printf("\tSelect list-1(Merger will happen here,HEAD_MERGER node):");
+                printf("\tSelect any 2 list to merge->\n");
+                printf("\tSelect list-1:");
                 scanf("%i",&list1);
                 printf("\tSelect list-2:");
                 scanf("%i",&list2);
+                if(list1 > list2)
+                {
+                    smaller=list2;
+                    larger=list1;
+                }    
+                else{
+                    smaller=list1;
+                    larger=list2;
+                }
+                
+                
                 //error checking for out of bound inputs
                 if(list1<=counter && list1>=1 && list2<=counter && list2>=1){
-                    row_node=search_list(list_node,list1);
-                    merger_node=search_list(list_node,list2);
+                    row_node=search_list(list_node,smaller);
+                    merger_node=search_list(list_node,larger);
                 if(checkempty(row_node) && checkempty(merger_node)){
                     break;
                 }
                     first=merge_list(row_node->next2,merger_node->next2);//merging to 1st list
-                    del_list(&list_node,list2);//deleting merged list
+                    del_list(&list_node,larger);//deleting merged list
                     outputformat();
                     printf("\tLists available after merger:\n");
                     print_list(list_node);
@@ -235,10 +253,8 @@ void add_node(node** first,int b){
     else{
 
     node* ptr=*first;
-    while(ptr->next!=NULL){
-        ptr=ptr->next;
-    }
-    ptr->next=nextnode;
+    *first=nextnode;
+    nextnode->next = ptr;
 
     }
     outputformat();
